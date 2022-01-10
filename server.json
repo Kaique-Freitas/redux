@@ -1,0 +1,33 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "title": "Macbook",
+        "price": 50000.90
+      },
+      {
+        "id": 2,
+        "title": "iPhone",
+        "price": 6000.99
+      },
+      {
+        "id": 3,
+        "title": "Applewatch",
+        "price": 2590.36
+      }
+    ],
+    "stock": [
+      {
+        "id": 1,
+        "quantity": 3
+      },
+      {
+        "id": 2,
+        "quantity": 0
+      },
+      {
+        "id": 3,
+        "quantity": 1
+      }
+    ]
+  }
