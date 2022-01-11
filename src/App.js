@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addProductToCart } from "./store/modules/cart/actions";
+import { addProductToCartRequest } from "./store/modules/cart/actions";
 import api from "./services/api";
 
 function App() {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-
-  // const { value } = useSelector((state) => state);
 
   async function getProducts() {
     const response = await api.get("products");
@@ -21,8 +19,12 @@ function App() {
 
   const { cart } = useSelector((state) => state);
 
+  const failedsStockCheck = useSelector((state) => {
+    return state.cart.failedStockCheck;
+  });
+
   const handleAddProductToCart = useCallback(
-    (product) => dispatch(addProductToCart(product)),
+    (product) => dispatch(addProductToCartRequest(product)),
     [dispatch]
   );
 
@@ -38,6 +40,8 @@ function App() {
           <button type="button" onClick={() => handleAddProductToCart(item)}>
             Buy
           </button>
+          {failedsStockCheck.includes(item.id) && <span> Out of stock</span>}
+
         </p>
       ))}
       <br></br>
@@ -47,12 +51,11 @@ function App() {
           return (
             <p key={item.product.id}>
               Title: {item.product.title} - Quantity: {item.quantity} -
-              Subtotal:{" "}
-              Price {item.product.price.toLocaleString("pt-BR", {
+              Subtotal: Price{" "}
+              {item.product.price.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               })}{" "}
-              <br></br>
             </p>
           );
         })}
